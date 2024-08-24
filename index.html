@@ -1,55 +1,82 @@
 <!DOCTYPE HTML>
+<html>
 <head>
   <title>Engine</title>
+  <style>
+    /* Ensure the body takes up the full viewport height and removes default margins */
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    /* Use Flexbox to center content */
+    body {
+      display: flex;
+      justify-content: center; /* Centers horizontally */
+      align-items: center;    /* Centers vertically */
+      background-color: #f0f0f0; /* Optional: light background for visibility */
+    }
+
+    /* Style for the jumpscare image */
+    #jumpscare {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      visibility: hidden;
+      z-index: 10; /* Ensure it appears above other elements */
+    }
+
+    /* Optional: Style the button for better appearance */
+    .btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<style>
-#jumpscare {position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; cursor: pointer; visibility: hidden;}
-</style>
 <body>
-<input type="button" onclick="jumpscare();" value="Click here to get free robux." class="btn"/> <!-- Bruh -->
-<img id="jumpscare" src="./jumpscare.jpg"/>
-<audio id="scream" src="./jumpscareAudio.mp3"/>
-<script>
+  <!-- Updated button text to "Jangan diklik" -->
+  <input type="button" onclick="jumpscare();" value="Jangan diklik" class="btn"/> <!-- Bruh -->
+  
+  <!-- Jumpscare image -->
+  <img id="jumpscare" src="./jumpscare.jpg" alt="Jumpscare Image"/>
+  
+  <!-- Audio for jumpscare -->
+  <audio id="scream" src="./jumpscareAudio.mp3"></audio>
+  
+  <script>
+    // Function to request fullscreen mode
+    function requestFullScreen(element) {
+      var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
 
-function requestFullScreen(element) {
-    // Supports most browsers and their versions.
-    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-
-    if (requestMethod) {
-        requestMethod.call(element); // Simple fullscreen toggle
-    } else if (typeof window.ActiveXObject !== "undefined") {
+      if (requestMethod) {
+        requestMethod.call(element);
+      } else if (typeof window.ActiveXObject !== "undefined") {
         var wscript = new ActiveXObject("WScript.Shell");
         if (wscript !== null) {
-            wscript.SendKeys("{F11}"); // Send fullscreen keys. (Only in IE)
+          wscript.SendKeys("{F11}");
         }
+      }
     }
-}
 
-function redirect() {
-document.location.href = 'https://example.com' // Redirect link. You can set it on "about:blank", to just ignore it
-}
+    // Function to handle redirection after jumpscare
+    function redirect() {
+      document.location.href = 'https://example.com'; // Replace with desired URL or 'about:blank'
+    }
 
-
-function jumpscare() {
-var elem = document.body; // Get body HTML element
-requestFullScreen(elem); // Go fullscreen
-var jumpscare = document.getElementById("jumpscare"); // Get jumpscare image (as HTML)
-jumpscare.style.visibility="visible"; // Set it visiblity to visible.
-var audio = document.getElementById("scream"); // Get audio element (as HTML)
-  audio.play(); // Play jumpscare sound
-setTimeout(redirect,3500); // Redirect after 3.5 seconds
-
-}
-
-
-
-
-
-
-
-</script>
-
-
+    // Function to execute jumpscare
+    function jumpscare() {
+      var elem = document.body;
+      requestFullScreen(elem); // Enter fullscreen
+      var jumpscareImage = document.getElementById("jumpscare");
+      jumpscareImage.style.visibility = "visible"; // Show jumpscare image
+      var audio = document.getElementById("scream");
+      audio.play(); // Play jumpscare audio
+      setTimeout(redirect, 3500); // Redirect after 3.5 seconds
+    }
+  </script>
 </body>
-
 </html>
